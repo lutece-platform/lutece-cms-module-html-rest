@@ -38,7 +38,6 @@ import fr.paris.lutece.plugins.html.business.portlet.HtmlPortletHome;
 import fr.paris.lutece.plugins.rest.service.RestConstants;
 import fr.paris.lutece.plugins.rest.util.json.JSONUtil;
 import fr.paris.lutece.plugins.rest.util.xml.XMLUtil;
-import fr.paris.lutece.portal.business.portlet.Portlet;
 import fr.paris.lutece.portal.business.portlet.PortletHome;
 import fr.paris.lutece.portal.service.html.HtmlCleanerException;
 import fr.paris.lutece.portal.service.html.HtmlCleanerService;
@@ -88,7 +87,7 @@ public class HtmlPortletRest
     }
 
     @GET
-    @Path("portlet/{id}")
+    @Path("/portlet/{id}")
     @Produces(MediaType.APPLICATION_XML)
     public String getPortletXml(@PathParam("id") String strId) throws SiteMessageException
     {
@@ -116,7 +115,7 @@ public class HtmlPortletRest
     }
 
     @GET
-    @Path("portlet/{id}")
+    @Path("/portlet/{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public String getPortletJson(@PathParam("id") String strId) throws SiteMessageException
     {
@@ -131,6 +130,7 @@ public class HtmlPortletRest
                 JSONObject json = new JSONObject();
                 json.accumulate( RestPortletConstants.ID_PORTLET, portlet.getId());
                 json.accumulate( RestPortletConstants.NAME, portlet.getName());
+                json.accumulate( RestPortletConstants.TYPE , portlet.getPortletTypeId());
                 json.accumulate( RestPortletConstants.ID_PAGE, portlet.getPageId());
                 json.accumulate( RestPortletConstants.ID_STYLE, portlet.getStyleId());
                 json.accumulate( RestPortletConstants.COLUMN, portlet.getColumn());
@@ -204,7 +204,7 @@ public class HtmlPortletRest
         int nColumn = Integer.parseInt(strColumn);
         int nStyleId = Integer.parseInt(strStyleId);
         int nAcceptAlias = Integer.parseInt(strAcceptAlias);
-        int nAcceptPortletTitle = Integer.parseInt(strDisplayPortletTitle);
+        int nDisplayPortletTitle = Integer.parseInt(strDisplayPortletTitle);
 
         portlet.setPageId(nPageId);
         portlet.setName(strName);
@@ -212,7 +212,7 @@ public class HtmlPortletRest
         portlet.setColumn(nColumn);
         portlet.setStyleId(nStyleId);
         portlet.setAcceptAlias(nAcceptAlias);
-        portlet.setDisplayPortletTitle(nAcceptPortletTitle);
+        portlet.setDisplayPortletTitle(nDisplayPortletTitle);
         portlet.setPortletTypeId(strPortletTypeId);
         portlet.setHtml(HtmlCleanerService.clean(strHtml));
 
@@ -240,7 +240,7 @@ public class HtmlPortletRest
 
     private void addPortletXml(StringBuilder sbXML, HtmlPortlet portlet)
     {
-        sbXML.append("<portlet>");
+        sbXML.append("<portlet>\n");
         sbXML.append("<portlet-name>").append(portlet.getName()).append("</portlet-name>\n");
         sbXML.append("<portlet-id>").append(portlet.getId()).append("</portlet-id>\n");
         sbXML.append("<page-id>").append(portlet.getPageId()).append("</page-id>\n");
