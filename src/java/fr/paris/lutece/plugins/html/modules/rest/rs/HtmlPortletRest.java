@@ -92,32 +92,27 @@ public class HtmlPortletRest
     @Produces(MediaType.APPLICATION_XML)
     public String getPortletXml(@PathParam("id") String strId) throws SiteMessageException
     {
-        String strXML = "";
+        StringBuilder sbXML = new StringBuilder();
 
         try
         {
-            int nId = Integer.parseInt( strId );
-            Portlet portlet = PortletHome.findByPrimaryKey( nId );
+            int nId = Integer.parseInt(strId);
+            HtmlPortlet portlet = (HtmlPortlet) PortletHome.findByPrimaryKey(nId);
 
-            if ( portlet != null )
+            if (portlet != null)
             {
-                strXML = portlet.getXmlDocument( null );
+                sbXML.append("<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n");
+                addPortletXml( sbXML, portlet );
             }
-        }
-        catch ( SiteMessageException e )
+        } catch (NumberFormatException e)
         {
-            strXML = XMLUtil.formatError( e.getMessage(  ), 2 );
-        }
-        catch ( NumberFormatException e )
+            sbXML.append(XMLUtil.formatError("Invalid portlet number", 3));
+        } catch (Exception e)
         {
-            strXML = XMLUtil.formatError( "Invalid portlet number", 3 );
-        }
-        catch ( Exception e )
-        {
-            strXML = XMLUtil.formatError( "Portlet not found", 1 );
+            sbXML.append(XMLUtil.formatError("Portlet not found", 1));
         }
 
-        return strXML;
+        return sbXML.toString();
     }
 
     @GET
@@ -241,4 +236,23 @@ public class HtmlPortletRest
     {
         return (strSrc != null) ? strSrc : strDefault;
     }
+
+
+    private void addPortletXml(StringBuilder sbXML, HtmlPortlet portlet)
+    {
+        sbXML.append("<portlet>");
+        sbXML.append("<portlet-name>").append(portlet.getName()).append("</portlet-name>\n");
+        sbXML.append("<portlet-id>").append(portlet.getId()).append("</portlet-id>\n");
+        sbXML.append("<page-id>").append(portlet.getPageId()).append("</page-id>\n");
+        sbXML.append("<display-portlet-title>").append(portlet.getDisplayPortletTitle()).append("</display-portlet-title>\n");
+        sbXML.append("<column>").append(portlet.getColumn()).append("</column>\n");
+        sbXML.append("<order>").append(portlet.getOrder()).append("</order>\n");
+        sbXML.append("<portlet-type>").append(portlet.getPortletTypeId()).append("</portlet-type>\n");
+        sbXML.append("<style-id>").append(portlet.getStyleId()).append("</style-id>\n");
+        sbXML.append("<status>").append(portlet.getStatus()).append("</status>\n");
+        sbXML.append("<html-portlet-content>").append(portlet.getHtml()).append("</html-portlet-content>\n");
+        sbXML.append("</portlet>");
+
+    }
+
 }
