@@ -19,4 +19,27 @@
 
 	<!-- if the plugin must have a connection pool with parameter : 1 - yes, 0 - no -->
     <db-pool-required>0</db-pool-required>
+    
+     <filters>
+       <filter>
+           <filter-name>htmlrest-security-filter</filter-name>
+           <url-pattern>/rest/plugins/html/*</url-pattern>
+           <filter-class>fr.paris.lutece.util.signrequest.servlet.ParameterHashRequestFilter</filter-class>
+
+           <init-param>
+               <param-name>elementsSignature</param-name>
+               <param-value>id-resource,name,description</param-value>
+           </init-param>
+
+           <init-param>
+               <param-name>validityTimePeriod</param-name>
+               <param-value>0</param-value>
+           </init-param>
+
+           <init-param>
+               <param-name>privateKey</param-name>
+               <param-value>change me</param-value>
+           </init-param>
+       </filter>
+   </filters>
 </plug-in>
