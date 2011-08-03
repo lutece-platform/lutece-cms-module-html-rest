@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?><plug-in>
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<plug-in>
     <!-- Plugin Informations -->
     <name>html-rest</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
@@ -12,34 +13,36 @@
     <provider-url>http://lutece.paris.fr</provider-url>
     <icon-url>images/admin/skin/plugins/html/modules/rest/html-rest.png</icon-url>
     <copyright>Copyright 2001-2011 Mairie de Paris</copyright>
-	<core-version-dependency>
-		<min-core-version>2.4.0</min-core-version>
-		<max-core-version/>
-	</core-version-dependency>
+    <core-version-dependency>
+        <min-core-version>2.4.0</min-core-version>
+        <max-core-version/>
+    </core-version-dependency>
 
 	<!-- if the plugin must have a connection pool with parameter : 1 - yes, 0 - no -->
     <db-pool-required>0</db-pool-required>
     
-     <filters>
-       <filter>
-           <filter-name>htmlrest-security-filter</filter-name>
-           <url-pattern>/rest/plugins/html/*</url-pattern>
-           <filter-class>fr.paris.lutece.util.signrequest.servlet.ParameterHashRequestFilter</filter-class>
+    <filters>
+        <filter>
+            <filter-name>htmlrest-security-filter</filter-name>
+            <url-pattern>/rest/html/*</url-pattern>
+            <filter-class>fr.paris.lutece.util.signrequest.servlet.ParameterHashRequestFilter</filter-class>
 
-           <init-param>
-               <param-name>elementsSignature</param-name>
-               <param-value>id-resource,name,description</param-value>
-           </init-param>
+            <init-param>
+               <!-- List separated by a comma of request parameters names used 
+               for signing the request  -->
+                <param-name>elementsSignature</param-name>
+                <param-value></param-value>
+            </init-param>
 
-           <init-param>
-               <param-name>validityTimePeriod</param-name>
-               <param-value>0</param-value>
-           </init-param>
+            <init-param>
+                <param-name>validityTimePeriod</param-name>
+                <param-value>0</param-value>
+            </init-param>
 
-           <init-param>
-               <param-name>privateKey</param-name>
-               <param-value>change me</param-value>
-           </init-param>
-       </filter>
-   </filters>
+            <init-param>
+                <param-name>privateKey</param-name>
+                <param-value>change me</param-value>
+            </init-param>
+        </filter>
+    </filters>
 </plug-in>
