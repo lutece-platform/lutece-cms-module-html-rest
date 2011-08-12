@@ -50,7 +50,7 @@
     <properties>
         <componentName>html-rest</componentName>
         <jiraProjectName>HTMLREST</jiraProjectName>
-        <jiraComponentId></jiraComponentId>
+        <jiraComponentId>10563</jiraComponentId>
     </properties>
 
     <scm>
